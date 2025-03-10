@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { prisma } from '@/database/conection';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { hash } from 'bcrypt';
+import { registrerService } from '@/service/registrer.service';
 
 export const registrerController = async (req: FastifyRequest, res: FastifyReply) => {
   const registrerUserSchema = z.object({
@@ -11,13 +13,15 @@ export const registrerController = async (req: FastifyRequest, res: FastifyReply
 
   const {name, email, password} = registrerUserSchema.parse(req.body);
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password_hash: password
-    }
-  });
+  try {
+    await registrerService({
+      name, email, password
+    });
+  } catch (error) {
+    return res.status(409).send(error);
+  
+  }
+
 
   return res.status(201).send({message: 'user created'});
 }
