@@ -27,7 +27,22 @@
 # RNFs (Requisitos não-funcionais)
 ## Requisotos que não partem do cliente. Coisas de dev
 
-- [ ] A senha do usúario precisa estar criptografada
+- [ ] A senha do usúario precisa estar criptografada;
 - [ ] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [ ] Todas lista de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuário deve ser indentificado por um JWT;
+
+# Comando importantes para utilizar o prisma
+
+## instalação 
+
+npm i -D prisma
+npx prisma init 
+Após criar a tabela usamos 
+npx prisma generate
+PAra fazer nossas migratios 
+npx prisma migrate dev
+
+# Docker 
+
+docker run --name api-solid-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=123456 -e POSTGRESQL_DATABASE=apisolid -p 5432:5432  bitnami/postgresql
